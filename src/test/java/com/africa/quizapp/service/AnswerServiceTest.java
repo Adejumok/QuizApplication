@@ -22,7 +22,7 @@ public class AnswerServiceTest {
     @BeforeEach
     void setUp(){
         request = AddAnswerRequest.builder()
-                .text("A reflection of anything.")
+                .text("A collection of objects.")
                 .build();
 
         updateRequest = UpdateAnswerRequest.builder()

@@ -22,7 +22,7 @@ public class QuizServiceTest {
     @BeforeEach
     void setUp(){
         request = AddQuizRequest.builder()
-                .name("Human Analytics")
+                .name("Zoolican")
                 .build();
 
         updateRequest = UpdateQuizRequest.builder()

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class QuizUser {
     private String mobileNumber;
     private String address;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Quiz> quizzes;
+    private Set<Quiz> quizzes;
     @OneToOne
     private Report report;
     @OneToOne

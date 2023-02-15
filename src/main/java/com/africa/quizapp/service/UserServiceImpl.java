@@ -48,20 +48,21 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponse subscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
         QuizUser quizUser = getAUserByEmail(userRequestToTakeQuiz.getUserEmail());
+        Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
+        quizUser.getQuizzes().add(foundQuiz);
         return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
     }
 
     @Override
     public UserResponse unsubscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
-        QuizUser quizUser = new QuizUser();
-        return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
+        return null;
     }
 
-    private UserResponse getUserThatTakesQuizResponse(UserRequestToTakeQuiz userRequestToTakeQuiz, QuizUser quizUser) {
-        Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
-        quizUser.getQuizzes().add(foundQuiz);
-        repository.save(quizUser);
+
+    private UserResponse getUserThatTakesQuizResponse(UserRequestToTakeQuiz userRequestToTakeQuiz,
+                                                      QuizUser quizUser) {
         FormRequest formRequest = getFormRequest(quizUser);
+        repository.save(quizUser);
         return UserResponse.builder()
                 .message("User with the email " + quizUser.getEmail() + " has taken quiz!")
                 .formResponse(formService.formResponse(formRequest))

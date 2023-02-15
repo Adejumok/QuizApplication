@@ -20,8 +20,8 @@ public class ReportServiceTest {
     @BeforeEach
     void setUp(){
         request = ReportRequest.builder()
-                .reportId(2L)
-                .userId(152L)
+                .reportId(1L)
+                .userId(1L)
                 .build();
     }
 

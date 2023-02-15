@@ -22,7 +22,7 @@ public class QuizServiceImpl implements QuizService{
     public QuizResponse addQuizResponse(AddQuizRequest request) {
         Quiz foundQuiz = repository.findByName(request.getName()).orElse(null);
         if (foundQuiz != null){
-            throw new QuizApplicationException("Question with title "+request.getName()+" already exist.");
+            throw new QuizApplicationException("Quiz with title "+request.getName()+" already exist.");
         }
         Quiz quiz = new Quiz();
         BeanUtils.copyProperties(request, quiz);

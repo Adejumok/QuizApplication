@@ -22,7 +22,7 @@ public class QuestionServiceTest {
     void setUp(){
         request = AddQuestionRequest
                 .builder()
-                .text("How would you describe a shadow?")
+                .text("How would you describe a set?")
                 .category(Category.ADVANCED)
                 .build();
 
@@ -42,7 +42,7 @@ public class QuestionServiceTest {
 
     @Test
     void addAnswerToQuestionTest() {
-        QuestionResponse response = questionService.addAnswerToQuestionResponse(2L, 1L);
+        QuestionResponse response = questionService.addAnswerToQuestionResponse(1L, 1L);
         log.info("{}", response.getMessage());
         assertThat(response).isNotNull();
     }
@@ -63,7 +63,7 @@ public class QuestionServiceTest {
 
     @Test
     void checkForWrongAnswerTest(){
-        QuestionResponse response = questionService.checkCorrectAnswerResponse(2L, 2L);
+        QuestionResponse response = questionService.checkCorrectAnswerResponse(1L, 2L);
         log.info("{}", response.getMessage());
         assertThat(response).isNotNull();
     }

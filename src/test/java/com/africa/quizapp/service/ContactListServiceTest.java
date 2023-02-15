@@ -33,7 +33,7 @@ public class ContactListServiceTest {
 
     @Test
     void addFormToContactListRequestTest(){
-        ContactListResponse response = contactListService.addFormToContactListResponse(1L, 1L);
+        ContactListResponse response = contactListService.addFormToContactListResponse(1L, 4L);
         log.info("{}", response.getMessage());
         assertThat(response).isNotNull();
     }

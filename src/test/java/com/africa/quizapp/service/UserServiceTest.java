@@ -19,20 +19,25 @@ public class UserServiceTest {
     private UserService userService;
     private RegisterUserRequest registerUserRequest;
     private UserRequestToTakeQuiz userRequestToTakeQuiz;
+    private UserRequestToTakeQuiz unsubscribedUserRequestToTakeQuiz;
 
     @BeforeEach
     void setUp(){
         registerUserRequest = RegisterUserRequest.builder()
-                .firstName("Kunle")
-                .lastName("Particular")
-                .email("kpart@gmail.com")
-                .mobileNumber("090224673444")
-                .address("No 13, Emily Akinola, Akoka")
+                .firstName("Lolo")
+                .lastName("Okocha")
+                .email("lolo@gmail.com")
+                .mobileNumber("0901013342")
+                .address("No 5, New Road, Sabo")
                 .build();
 
         userRequestToTakeQuiz = UserRequestToTakeQuiz.builder()
-                .quizName("Human Analytics")
-                .userEmail("kpart@gmail.com")
+                .quizName("Zoolican")
+                .userEmail("lolo@gmail.com")
+                .build();
+        unsubscribedUserRequestToTakeQuiz = UserRequestToTakeQuiz.builder()
+                .quizName("Nectonomy")
+                .userEmail("funmi@gmail.com")
                 .build();
     }
 
@@ -41,20 +46,12 @@ public class UserServiceTest {
         UserResponse response = userService.registerUserResponse(registerUserRequest);
         log.info("{}", response.getMessage());
         assertThat(response).isNotNull();
-        assertThat(response.getUser().getFirstName()).isEqualTo("Kunle");
+        assertThat(response.getUser().getFirstName()).isEqualTo("Lolo");
     }
 
     @Test
     void subscribedUserCanTakeAQuiz(){
         UserResponse response = userService.subscribedUserTakesQuiz(userRequestToTakeQuiz);
-        log.info("{}", response.getFormResponse());
-        log.info("{}", response.getMessage());
-        assertThat(response).isNotNull();
-    }
-
-    @Test
-    void unSubscribedUserCanTakeAQuiz(){
-        UserResponse response = userService.unsubscribedUserTakesQuiz(userRequestToTakeQuiz);
         log.info("{}", response.getFormResponse());
         log.info("{}", response.getMessage());
         assertThat(response).isNotNull();

@@ -7,6 +7,7 @@ import com.africa.quizapp.exception.QuizApplicationException;
 import com.africa.quizapp.models.QuizUser;
 import com.africa.quizapp.models.contactModels.Form;
 import com.africa.quizapp.repository.FormRepository;
+import com.africa.quizapp.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +17,25 @@ import java.util.Optional;
 @AllArgsConstructor
 public class FormServiceImpl implements FormService{
     private final FormRepository repository;
+    private final UserRepository userRepository;
     private final MailService mailService;
     @Override
     public FormResponse formResponse(FormRequest formRequest) {
-        QuizUser user = new QuizUser();
+        QuizUser foundUser = userRepository.findByEmail(formRequest.getUserEmail()).orElse(null);
+        return getFormResponse(foundUser);
+    }
+
+    private FormResponse getFormResponse(QuizUser foundUser) {
         Form form = new Form();
-        form.setQuizUser(user);
-        form.setUserEmail(user.getEmail());
-        sendMail(user);
+        form.setQuizUser(foundUser);
+        form.setUserEmail(foundUser.getEmail());
+        sendMail(foundUser);
         repository.save(form);
         return FormResponse.builder()
                 .message("User successfully added to form.")
                 .build();
     }
+
 
     @Override
     public Form locateAForm(Long id){
