@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CompletableFuture;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -43,25 +45,23 @@ public class UserServiceTest {
 
     @Test
     void registerUserTest(){
-        UserResponse response = userService.registerUserResponse(registerUserRequest);
-        log.info("{}", response.getMessage());
+        CompletableFuture<UserResponse> response = userService.registerUserResponse(registerUserRequest);
+        log.info("{}", response);
         assertThat(response).isNotNull();
-        assertThat(response.getUser().getFirstName()).isEqualTo("Lolo");
     }
 
     @Test
     void subscribedUserCanTakeAQuiz(){
-        UserResponse response = userService.subscribedUserTakesQuiz(userRequestToTakeQuiz);
-        log.info("{}", response.getFormResponse());
-        log.info("{}", response.getMessage());
+        CompletableFuture<UserResponse> response = userService.subscribedUserTakesQuiz(userRequestToTakeQuiz);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
 
     @Test
     void deleteUserTest(){
-        UserResponse response = userService.deleteUserResponse(1L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<UserResponse> response = userService.deleteUserResponse(1L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 }

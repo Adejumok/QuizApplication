@@ -8,91 +8,132 @@ import com.africa.quizapp.exception.QuizApplicationException;
 import com.africa.quizapp.models.quizModels.Quiz;
 import com.africa.quizapp.models.QuizUser;
 import com.africa.quizapp.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository repository;
     private final QuizService quizService;
     private final FormService formService;
+    private final Executor executor;
     @Override
-    public UserResponse registerUserResponse(RegisterUserRequest registerUserRequest) {
-        QuizUser foundUser = repository.findByEmail(registerUserRequest.getEmail()).orElse(null);
-        if (foundUser != null){
-            throw new QuizApplicationException("User with email "+registerUserRequest.getEmail()+" already exist.");
+    public CompletableFuture<UserResponse> registerUserResponse(RegisterUserRequest registerUserRequest) {
+        try {
+            return CompletableFuture.supplyAsync(()->{
+                QuizUser foundUser = repository.findByEmail(registerUserRequest.getEmail()).orElse(null);
+                if (foundUser != null){
+                    throw new QuizApplicationException("User with email "+registerUserRequest.getEmail()+" already exist.");
+                }
+                QuizUser user = new QuizUser();
+                BeanUtils.copyProperties(registerUserRequest, user);
+                repository.save(user);
+                return UserResponse.builder()
+                        .message("User with the email "+user.getEmail()+" registered successfully!")
+                        .user(user)
+                        .build();
+            }, executor);
+        }catch (Exception e){
+            throw new QuizApplicationException("");
         }
-        QuizUser user = new QuizUser();
-        BeanUtils.copyProperties(registerUserRequest, user);
-        repository.save(user);
-        return UserResponse.builder()
-                .message("User with the email "+user.getEmail()+" registered successfully!")
-                .user(user)
-                .build();
+
     }
 
 
     @Override
     public QuizUser getAUserById(Long id) {
-        Optional<QuizUser> foundUser = repository.findById(id);
-        if (foundUser.isEmpty()){
-            throw new QuizApplicationException("User with id '"+id+"' does not exist.");
+        try {
+            Optional<QuizUser> foundUser = repository.findById(id);
+            if (foundUser.isEmpty()){
+                throw new QuizApplicationException("User with id '"+id+"' does not exist.");
+            }
+            return foundUser.get();
+        }catch (Exception e){
+            throw new QuizApplicationException("");
         }
-        return foundUser.get();
+
     }
 
     @Override
-    public UserResponse subscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
-        QuizUser quizUser = getAUserByEmail(userRequestToTakeQuiz.getUserEmail());
-        Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
-        quizUser.getQuizzes().add(foundQuiz);
-        return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
+    public CompletableFuture<UserResponse> subscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
+        try {
+            QuizUser quizUser = getAUserByEmail(userRequestToTakeQuiz.getUserEmail());
+            Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
+            quizUser.getQuizzes().add(foundQuiz);
+            return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
+        }catch (Exception e){
+            throw new QuizApplicationException("");
+        }
     }
 
     @Override
-    public UserResponse unsubscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
+    public CompletableFuture<UserResponse> unsubscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
         return null;
     }
 
 
-    private UserResponse getUserThatTakesQuizResponse(UserRequestToTakeQuiz userRequestToTakeQuiz,
+    private CompletableFuture<UserResponse> getUserThatTakesQuizResponse(UserRequestToTakeQuiz userRequestToTakeQuiz,
                                                       QuizUser quizUser) {
-        FormRequest formRequest = getFormRequest(quizUser);
-        repository.save(quizUser);
-        return UserResponse.builder()
-                .message("User with the email " + quizUser.getEmail() + " has taken quiz!")
-                .formResponse(formService.formResponse(formRequest))
-                .user(quizUser)
-                .build();
+        try {
+            return CompletableFuture.supplyAsync(()->{
+                getFormRequest(quizUser);
+                repository.save(quizUser);
+                return UserResponse.builder()
+                        .message("User with the email " + quizUser.getEmail() + " has taken quiz!")
+                        .user(quizUser)
+                        .build();
+            }, executor);
+        }catch (Exception e){
+            throw new QuizApplicationException("");
+        }
+
     }
 
     private FormRequest getFormRequest(QuizUser quizUser) {
-        FormRequest formRequest = FormRequest.builder()
-                .userEmail(quizUser.getEmail())
-                .build();
-        formService.formResponse(formRequest);
-        return formRequest;
+        try {
+            FormRequest formRequest = FormRequest.builder()
+                    .userEmail(quizUser.getEmail())
+                    .build();
+            formService.formResponse(formRequest);
+            return formRequest;
+        }catch (Exception e){
+            throw new QuizApplicationException("");
+        }
+
     }
 
     @Override
     public QuizUser getAUserByEmail(String email) {
-        Optional<QuizUser> foundUser = repository.findByEmail(email);
-        if (foundUser.isEmpty()){
-            throw new QuizApplicationException("User with email '"+email+"' does not exist.");
+        try {
+            Optional<QuizUser> foundUser = repository.findByEmail(email);
+            if (foundUser.isEmpty()){
+                throw new QuizApplicationException("User with email '"+email+"' does not exist.");
+            }
+            return foundUser.get();
+        }catch (Exception e){
+            throw new QuizApplicationException("");
         }
-        return foundUser.get();
     }
 
     @Override
-    public UserResponse deleteUserResponse(long id) {
-        QuizUser foundUser = getAUserById(id);
-        repository.delete(foundUser);
-        return UserResponse.builder()
-                .message("User with id '"+id+"' has been successfully deleted.")
-                .build();
+    public CompletableFuture<UserResponse> deleteUserResponse(long id) {
+        try {
+            return CompletableFuture.supplyAsync(()->{
+                QuizUser foundUser = getAUserById(id);
+                repository.delete(foundUser);
+                return UserResponse.builder()
+                        .message("User with id '"+id+"' has been successfully deleted.")
+                        .build();
+            }, executor);
+        }catch (Exception e){
+            throw new QuizApplicationException("");
+        }
+
     }
 }

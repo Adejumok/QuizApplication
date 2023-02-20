@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CompletableFuture;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -26,15 +28,15 @@ public class ContactListServiceTest {
 
     @Test
     void registerContactListRequestTest(){
-        ContactListResponse response = contactListService.registerContactListResponse(contactListRequest);
-        log.info("{}", response.getMessage());
+        CompletableFuture<ContactListResponse> response = contactListService.registerContactListResponse(contactListRequest);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void addFormToContactListRequestTest(){
-        ContactListResponse response = contactListService.addFormToContactListResponse(1L, 4L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<ContactListResponse> response = contactListService.addFormToContactListResponse(1L, 4L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 }

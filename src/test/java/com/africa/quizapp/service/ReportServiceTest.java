@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CompletableFuture;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -27,15 +29,15 @@ public class ReportServiceTest {
 
     @Test
     void addUserToReportTest(){
-        ReportResponse response = reportService.addUserToReport(request);
-        log.info("{}", response.getMessage());
+        CompletableFuture<ReportResponse> response = reportService.addUserToReport(request);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void deleteReportTest(){
-        ReportResponse response = reportService.deleteReportResponse(1L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<ReportResponse> response = reportService.deleteReportResponse(1L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 }

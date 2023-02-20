@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CompletableFuture;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -33,30 +35,29 @@ public class QuizServiceTest {
 
     @Test
     void addQuizTest(){
-        QuizResponse response = quizService.addQuizResponse(request);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuizResponse> response = quizService.addQuizResponse(request);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void addQuestionToQuizTest() {
-        QuizResponse response = quizService.addQuestionToQuizResponse(102L, 1L);
-        log.info("{}", response.getMessage());
-        log.info("{}", response.getQuizScore());
+        CompletableFuture<QuizResponse> response = quizService.addQuestionToQuizResponse(102L, 1L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
     
     @Test
     void updateQuizTest(){
-        QuizResponse response = quizService.updateQuizResponse(updateRequest);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuizResponse> response = quizService.updateQuizResponse(updateRequest);
+        log.info("{}", response);
         assertThat(response).isNotNull(); 
     }
 
     @Test
     void deleteQuizTest(){
-        QuizResponse response = quizService.deleteQuizResponse(52L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuizResponse> response = quizService.deleteQuizResponse(52L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 }

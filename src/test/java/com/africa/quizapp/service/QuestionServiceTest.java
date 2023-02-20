@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Slf4j
 @SpringBootTest
@@ -22,8 +25,8 @@ public class QuestionServiceTest {
     void setUp(){
         request = AddQuestionRequest
                 .builder()
-                .text("How would you describe a set?")
-                .category(Category.ADVANCED)
+                .text("How would you describe a marketing?")
+                .category(Category.INTERMEDIATE)
                 .build();
 
         updateQuestionRequest = UpdateQuestionRequest.builder()
@@ -35,50 +38,50 @@ public class QuestionServiceTest {
 
     @Test
     void addQuestionTest(){
-        QuestionResponse response = questionService.addQuestionResponse(request);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.addQuestionResponse(request);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
-    void addAnswerToQuestionTest() {
-        QuestionResponse response = questionService.addAnswerToQuestionResponse(1L, 1L);
-        log.info("{}", response.getMessage());
+    void addAnswerToQuestionTest() throws ExecutionException, InterruptedException {
+        CompletableFuture<QuestionResponse> response = questionService.addAnswerToQuestionResponse(1L, 1L);
+        log.info("{}", response.get());
         assertThat(response).isNotNull();
     }
 
     @Test
     void addCorrectAnswerTest(){
-        QuestionResponse response = questionService.addCorrectAnswerResponse(1L, 1L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.addCorrectAnswerResponse(1L, 1L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void checkForCorrectAnswerTest(){
-        QuestionResponse response = questionService.checkCorrectAnswerResponse(1L, 1L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.checkCorrectAnswerResponse(1L, 1L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void checkForWrongAnswerTest(){
-        QuestionResponse response = questionService.checkCorrectAnswerResponse(1L, 2L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.checkCorrectAnswerResponse(1L, 2L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void updateQuestionTest(){
-        QuestionResponse response = questionService.updateQuestionResponse(updateQuestionRequest);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.updateQuestionResponse(updateQuestionRequest);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
     @Test
     void deleteQuestionTest(){
-        QuestionResponse response = questionService.deleteQuestionResponse(4L);
-        log.info("{}", response.getMessage());
+        CompletableFuture<QuestionResponse> response = questionService.deleteQuestionResponse(4L);
+        log.info("{}", response);
         assertThat(response).isNotNull();
     }
 
