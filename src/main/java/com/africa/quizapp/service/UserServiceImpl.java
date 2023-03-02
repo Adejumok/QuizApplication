@@ -2,7 +2,9 @@ package com.africa.quizapp.service;
 
 import com.africa.quizapp.dto.requests.FormRequest;
 import com.africa.quizapp.dto.requests.RegisterUserRequest;
+import com.africa.quizapp.dto.requests.UpdateUserRequest;
 import com.africa.quizapp.dto.requests.UserRequestToTakeQuiz;
+import com.africa.quizapp.dto.responses.QuizResponse;
 import com.africa.quizapp.dto.responses.UserResponse;
 import com.africa.quizapp.exception.QuizApplicationException;
 import com.africa.quizapp.models.quizModels.Quiz;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User not registered due to: "+e.getMessage());
         }
 
     }
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService{
             }
             return foundUser.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User not found due to: "+e.getMessage());
         }
 
     }
@@ -68,7 +70,7 @@ public class UserServiceImpl implements UserService{
             quizUser.getQuizzes().add(foundQuiz);
             return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User unable to take test due to: "+e.getMessage());
         }
     }
 
@@ -85,12 +87,12 @@ public class UserServiceImpl implements UserService{
                 getFormRequest(quizUser);
                 repository.save(quizUser);
                 return UserResponse.builder()
-                        .message("User with the email " + quizUser.getEmail() + " has taken quiz!")
+                        .message("User has taken quiz!")
                         .user(quizUser)
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User unable to take test due to: "+e.getMessage());
         }
 
     }
@@ -103,7 +105,7 @@ public class UserServiceImpl implements UserService{
             formService.formResponse(formRequest);
             return formRequest;
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Form request not successful because: "+e.getMessage());
         }
 
     }
@@ -117,7 +119,23 @@ public class UserServiceImpl implements UserService{
             }
             return foundUser.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User not found due to: "+e.getMessage());
+        }
+    }
+
+    @Override
+    public CompletableFuture<UserResponse> updateUserResponse(UpdateUserRequest updateRequest) {
+        try{
+            return CompletableFuture.supplyAsync(()->{
+                QuizUser foundUser = getAUserById(updateRequest.getId());
+                BeanUtils.copyProperties(updateRequest, foundUser);
+                repository.save(foundUser);
+                return UserResponse.builder()
+                        .message("User successfully updated.")
+                        .build();
+            }, executor);
+        }catch (Exception e){
+            throw new QuizApplicationException("User not updated due to: "+e.getMessage());
         }
     }
 
@@ -132,7 +150,7 @@ public class UserServiceImpl implements UserService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("User not deleted due to: "+e.getMessage());
         }
 
     }

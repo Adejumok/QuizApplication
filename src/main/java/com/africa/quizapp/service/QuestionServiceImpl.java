@@ -26,6 +26,11 @@ class QuestionServiceImpl implements QuestionService{
     public CompletableFuture<QuestionResponse> addQuestionResponse(AddQuestionRequest request) {
         try {
             return CompletableFuture.supplyAsync(()->{
+                Question foundQuestion = repository.findByText(request.getText())
+                        .orElse(null);
+                if (foundQuestion != null){
+                    throw new QuizApplicationException("Question with text '"+request.getText()+"' already exist.");
+                }
                 Question question = new Question();
                 BeanUtils.copyProperties(request, question);
                 repository.save(question);
@@ -34,7 +39,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Question with title "+request.getText()+" not added.");
+            throw new QuizApplicationException("Question not added due to: "+e.getMessage());
         }
 
 
@@ -53,7 +58,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Answer with id "+answerId+" not added to the Question.");
+            throw new QuizApplicationException("Answer not added to the Question due to: "+e.getMessage());
         }
 
     }
@@ -72,7 +77,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Correct Answer with id "+answerId+" not added to the Question.");
+            throw new QuizApplicationException("Correct Answer not added to the Question due to: "+e.getMessage());
         }
 
     }
@@ -95,7 +100,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Answer with id "+answerId+" not checked.");
+            throw new QuizApplicationException("Answer not checked because: "+e.getMessage());
         }
 
     }
@@ -108,7 +113,7 @@ class QuestionServiceImpl implements QuestionService{
             }
             return foundQuestion.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Question not found because ->"+e.getMessage());
         }
 
     }
@@ -125,7 +130,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Question with id "+request.getId()+" not updated.");
+            throw new QuizApplicationException("Question not updated because: "+e.getMessage());
         }
 
     }
@@ -141,7 +146,7 @@ class QuestionServiceImpl implements QuestionService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Question with id "+id+" not deleted.");
+            throw new QuizApplicationException("Question not deleted because: "+e.getMessage());
         }
 
     }

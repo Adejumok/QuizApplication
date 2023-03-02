@@ -12,5 +12,4 @@ import java.util.List;
 @Builder
 public class AddQuizRequest {
     private String name;
-    private List<Question> questions;
 }

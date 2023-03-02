@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
@@ -21,21 +23,16 @@ public class AnswerServiceTest {
     @Autowired
     private AnswerService answerService;
     private AddAnswerRequest request;
-    private AddAnswerRequest request1;
-
     private UpdateAnswerRequest updateRequest;
 
     @BeforeEach
     void setUp(){
         request = AddAnswerRequest.builder()
-                .text("A question.")
-                .build();
-        request1 = AddAnswerRequest.builder()
-                .text("A thing.")
+                .text("Make")
                 .build();
 
         updateRequest = UpdateAnswerRequest.builder()
-                .id(1L)
+                .id(7L)
                 .text("A name")
                 .build();
     }
@@ -43,30 +40,31 @@ public class AnswerServiceTest {
     @Test
     void addAnswerRequestTest(){
         CompletableFuture<AnswerResponse> response = answerService.addAnswerResponse(request);
-        log.info("{}", response);
+        AnswerResponse obj =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(obj.getMessage(), "Answer successfully added.");
     }
 
     @Test
     void addSameAnswerRequestGetErrorTest(){
-        CompletableFuture<AnswerResponse> response = answerService.addAnswerResponse(request1);
-        log.info("{}", response);
-//        assertThrows(QuizApplicationException.class, ()->
-//                answerService.addAnswerResponse(request1));
+        CompletableFuture<AnswerResponse> response = answerService.addAnswerResponse(request);
         assertThat(response).isNotNull();
+        assertThrows(CompletionException.class, response::join);
     }
 
     @Test
     void updateAnswerTest(){
         CompletableFuture<AnswerResponse> response = answerService.updateAnswerResponse(updateRequest);
-        log.info("{}", response);
+        AnswerResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(),"Answer successfully updated.");
     }
 
     @Test
     void deleteAnswerTest(){
-        CompletableFuture<AnswerResponse> response = answerService.deleteAnswerResponse(1L);
-        log.info("{}", response);
+        CompletableFuture<AnswerResponse> response = answerService.deleteAnswerResponse(6L);
+        AnswerResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(),"Answer has been successfully deleted.");
     }
 }

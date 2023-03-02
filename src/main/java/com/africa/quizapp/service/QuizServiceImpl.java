@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor
 public class QuizServiceImpl implements QuizService{
     private final QuizRepository repository;
-    private QuestionService questionService;
+    private final QuestionService questionService;
     private final Executor executor;
 
     @Override
@@ -38,7 +38,7 @@ public class QuizServiceImpl implements QuizService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Quiz with title "+request.getName()+" not added.");
+            throw new QuizApplicationException("Quiz not added due to: "+e.getMessage());
         }
 
     }
@@ -55,7 +55,7 @@ public class QuizServiceImpl implements QuizService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Quiz not updated due to: "+e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class QuizServiceImpl implements QuizService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Quiz not deleted due to: "+e.getMessage());
         }
 
     }
@@ -89,7 +89,7 @@ public class QuizServiceImpl implements QuizService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Question not added to Quiz due to: "+e.getMessage());
         }
 
     }
@@ -103,7 +103,7 @@ public class QuizServiceImpl implements QuizService{
             }
             return foundQuiz.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Quiz not found due to: "+e.getMessage());
         }
 
     }
@@ -117,7 +117,7 @@ public class QuizServiceImpl implements QuizService{
             }
             return foundQuiz.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Quiz not found due to: "+e.getMessage());
         }
 
     }

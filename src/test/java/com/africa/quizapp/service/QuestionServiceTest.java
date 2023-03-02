@@ -2,19 +2,21 @@ package com.africa.quizapp.service;
 
 import com.africa.quizapp.dto.requests.AddQuestionRequest;
 import com.africa.quizapp.dto.requests.UpdateQuestionRequest;
+import com.africa.quizapp.dto.responses.AnswerResponse;
 import com.africa.quizapp.dto.responses.QuestionResponse;
 import com.africa.quizapp.models.enums.Category;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletionException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-@Slf4j
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest
 public class QuestionServiceTest {
     @Autowired
@@ -25,8 +27,8 @@ public class QuestionServiceTest {
     void setUp(){
         request = AddQuestionRequest
                 .builder()
-                .text("How would you describe a marketing?")
-                .category(Category.INTERMEDIATE)
+                .text("How would you describe a Metaverse?")
+                .category(Category.BEGINNER)
                 .build();
 
         updateQuestionRequest = UpdateQuestionRequest.builder()
@@ -39,50 +41,65 @@ public class QuestionServiceTest {
     @Test
     void addQuestionTest(){
         CompletableFuture<QuestionResponse> response = questionService.addQuestionResponse(request);
-        log.info("{}", response);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Question created successfully.");
     }
 
     @Test
-    void addAnswerToQuestionTest() throws ExecutionException, InterruptedException {
-        CompletableFuture<QuestionResponse> response = questionService.addAnswerToQuestionResponse(1L, 1L);
-        log.info("{}", response.get());
+    void addSameQuestionRequestGetErrorTest(){
+        CompletableFuture<QuestionResponse> response = questionService.addQuestionResponse(request);
         assertThat(response).isNotNull();
+        assertThrows(CompletionException.class, response::join);
+    }
+
+    @Test
+    void addAnswerToQuestionTest(){
+        CompletableFuture<QuestionResponse> response = questionService.addAnswerToQuestionResponse(2L, 1L);
+        QuestionResponse jointResponse =  response.join();
+        assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Answer successfully added to Question with id '"+1L+"'!");
     }
 
     @Test
     void addCorrectAnswerTest(){
         CompletableFuture<QuestionResponse> response = questionService.addCorrectAnswerResponse(1L, 1L);
-        log.info("{}", response);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Answer with id '"+1L+"' successfully " +
+                "added to this Question as the correct answer!");
     }
 
     @Test
     void checkForCorrectAnswerTest(){
         CompletableFuture<QuestionResponse> response = questionService.checkCorrectAnswerResponse(1L, 1L);
-        log.info("{}", response);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Correct!");
     }
 
     @Test
     void checkForWrongAnswerTest(){
         CompletableFuture<QuestionResponse> response = questionService.checkCorrectAnswerResponse(1L, 2L);
-        log.info("{}", response);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Oops! Wrong.");
     }
 
     @Test
     void updateQuestionTest(){
         CompletableFuture<QuestionResponse> response = questionService.updateQuestionResponse(updateQuestionRequest);
-        log.info("{}", response);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "Question successfully updated.");
     }
 
     @Test
     void deleteQuestionTest(){
-        CompletableFuture<QuestionResponse> response = questionService.deleteQuestionResponse(4L);
-        log.info("{}", response);
+        CompletableFuture<QuestionResponse> response = questionService.deleteQuestionResponse(2L);
+        QuestionResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(),"Question has been successfully deleted.");
     }
 
 

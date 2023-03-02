@@ -38,7 +38,7 @@ public class ReportServiceImpl implements ReportService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException(""+e.getMessage());
+            throw new QuizApplicationException("User is not added to report because: "+e.getMessage());
         }
 
     }
@@ -52,7 +52,7 @@ public class ReportServiceImpl implements ReportService{
             }
             return foundReport.get();
         }catch (Exception e){
-            throw new QuizApplicationException(""+e.getMessage());
+            throw new QuizApplicationException("Report not found due to: "+e.getMessage());
         }
 
     }
@@ -68,7 +68,7 @@ public class ReportServiceImpl implements ReportService{
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException(""+e.getMessage());
+            throw new QuizApplicationException("Report not deleted because: "+e.getMessage());
         }
 
     }

@@ -25,7 +25,7 @@ public class AnswerServiceImpl implements AnswerService {
                 Answer foundAnswer = repository.findByText(request.getText())
                         .orElse(null);
                 if (foundAnswer != null){
-                    throw new QuizApplicationException("Answer with text "+request.getText()+" already exist.");
+                    throw new QuizApplicationException("Answer with text '"+request.getText()+"' already exist.");
                 }
                 Answer answer = new Answer();
                 BeanUtils.copyProperties(request, answer);
@@ -35,7 +35,7 @@ public class AnswerServiceImpl implements AnswerService {
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Answer with text "+request.getText()+" not added.");
+            throw new QuizApplicationException("Answer with text "+request.getText()+" not added because -> "+e.getMessage());
         }
 
     }
@@ -51,7 +51,7 @@ public class AnswerServiceImpl implements AnswerService {
                                 .message("Answer successfully updated.")
                                 .build();}, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("Answer not updated.");
+            throw new QuizApplicationException("Answer not updated because "+e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class AnswerServiceImpl implements AnswerService {
                         .build();
             }, executor);
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Answer not deleted because "+e.getMessage());
         }
     }
     @Override
@@ -78,7 +78,7 @@ public class AnswerServiceImpl implements AnswerService {
             }
             return foundAnswer.get();
         }catch (Exception e){
-            throw new QuizApplicationException("");
+            throw new QuizApplicationException("Answer not found because "+e.getMessage());
         }
 
     }
