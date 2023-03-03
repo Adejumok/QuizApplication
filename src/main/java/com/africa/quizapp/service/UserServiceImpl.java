@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService{
             QuizUser quizUser = getAUserByEmail(userRequestToTakeQuiz.getUserEmail());
             Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
             quizUser.getQuizzes().add(foundQuiz);
-            return getUserThatTakesQuizResponse(userRequestToTakeQuiz, quizUser);
+            return getUserThatTakesQuizResponse(quizUser);
         }catch (Exception e){
             throw new QuizApplicationException("User unable to take test due to: "+e.getMessage());
         }
@@ -76,16 +76,22 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public CompletableFuture<UserResponse> unsubscribedUserTakesQuiz(UserRequestToTakeQuiz userRequestToTakeQuiz) {
-        return null;
+        try {
+            QuizUser quizUser = new QuizUser();
+            Quiz foundQuiz = quizService.getAQuizByName(userRequestToTakeQuiz.getQuizName());
+            quizUser.setEmail(userRequestToTakeQuiz.getUserEmail());
+            quizUser.setQuiz(foundQuiz);
+            return getUserThatTakesQuizResponse(quizUser);
+        }catch (Exception e){
+            throw new QuizApplicationException("User unable to take test due to: "+e.getMessage());
+        }
     }
 
 
-    private CompletableFuture<UserResponse> getUserThatTakesQuizResponse(UserRequestToTakeQuiz userRequestToTakeQuiz,
-                                                      QuizUser quizUser) {
+    private CompletableFuture<UserResponse> getUserThatTakesQuizResponse(QuizUser quizUser) {
         try {
             return CompletableFuture.supplyAsync(()->{
                 getFormRequest(quizUser);
-                repository.save(quizUser);
                 return UserResponse.builder()
                         .message("User has taken quiz!")
                         .user(quizUser)

@@ -31,5 +31,7 @@ public class QuizUser {
     @OneToOne
     private Report report;
     @OneToOne
+    private Quiz quiz;
+    @OneToOne
     private Form form;
     }

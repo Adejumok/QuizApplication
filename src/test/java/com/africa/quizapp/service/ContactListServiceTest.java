@@ -47,7 +47,7 @@ public class ContactListServiceTest {
 
     @Test
     void addFormToContactListRequestTest(){
-        CompletableFuture<ContactListResponse> response = contactListService.addFormToContactListResponse(1L, 4L);
+        CompletableFuture<ContactListResponse> response = contactListService.addFormToContactListResponse(1L, 1L);
         ContactListResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
         assertEquals(jointResponse.getMessage(), "Form successfully added to Contact List with id '"+1L+"'!");

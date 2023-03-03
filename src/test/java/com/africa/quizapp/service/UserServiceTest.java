@@ -39,11 +39,11 @@ public class UserServiceTest {
                 .build();
 
         userRequestToTakeQuiz = UserRequestToTakeQuiz.builder()
-                .quizName("Nectonomy")
+                .quizName("Bob Daddy")
                 .userEmail("lolo@gmail.com")
                 .build();
         unsubscribedUserRequestToTakeQuiz = UserRequestToTakeQuiz.builder()
-                .quizName("Nectonomy")
+                .quizName("Bob Daddy")
                 .userEmail("funmi@gmail.com")
                 .build();
         updateUserRequest = UpdateUserRequest.builder()
@@ -74,6 +74,14 @@ public class UserServiceTest {
     @Test
     void subscribedUserCanTakeAQuiz(){
         CompletableFuture<UserResponse> response = userService.subscribedUserTakesQuiz(userRequestToTakeQuiz);
+        UserResponse jointResponse =  response.join();
+        assertThat(response).isNotNull();
+        assertEquals(jointResponse.getMessage(), "User has taken quiz!");
+    }
+
+    @Test
+    void unSubscribedUserCanTakeAQuiz(){
+        CompletableFuture<UserResponse> response = userService.unsubscribedUserTakesQuiz(unsubscribedUserRequestToTakeQuiz);
         UserResponse jointResponse =  response.join();
         assertThat(response).isNotNull();
         assertEquals(jointResponse.getMessage(), "User has taken quiz!");
