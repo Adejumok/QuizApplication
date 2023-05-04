@@ -21,9 +21,9 @@ These instructions will help you get a copy of the project up and running on you
 
 ### Prerequisites
 
-- [Java](https://www.java.com/) (version X.X.X or higher)
-- [Maven](https://maven.apache.org/) (version X.X.X or higher)
-- [Postgres](https://www.mysql.com/) (version X.X.X or higher)
+- [Java](https://www.java.com/) (version 8.0 or higher)
+- [Maven](https://maven.apache.org/) (version 3.9.9 or higher)
+- [Postgres](https://www.postgresql.org/) (version 15.2 or higher)
 
 ### Installation
 
