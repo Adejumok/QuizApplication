@@ -23,7 +23,7 @@ These instructions will help you get a copy of the project up and running on you
 
 - [Java](https://www.java.com/) (version X.X.X or higher)
 - [Maven](https://maven.apache.org/) (version X.X.X or higher)
-- [MySQL](https://www.mysql.com/) (version X.X.X or higher)
+- [Postgres](https://www.mysql.com/) (version X.X.X or higher)
 
 ### Installation
 
