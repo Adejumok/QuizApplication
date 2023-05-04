@@ -21,7 +21,7 @@ These instructions will help you get a copy of the project up and running on you
 
 ### Prerequisites
 
-- [Java](https://www.java.com/) (version 8.0 or higher)
+- [Java](https://www.java.com/) (version 11 or higher)
 - [Maven](https://maven.apache.org/) (version 3.9.9 or higher)
 - [Postgres](https://www.postgresql.org/) (version 15.2 or higher)
 
@@ -30,7 +30,7 @@ These instructions will help you get a copy of the project up and running on you
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/username/project-name.git
+git clone https://github.com/Adejumok/QuizApplication
 ```
 
 2. Change directory to the project folder:
@@ -39,7 +39,7 @@ git clone https://github.com/username/project-name.git
 cd project-name
 ```
 
-3. Create a MySQL database and update the database connection details in the `application.properties` file.
+3. Create a Postgres database and update the database connection details in the `application.properties` file.
 
 4. Build the project using Maven:
 
@@ -59,8 +59,94 @@ The application will be running at `http://localhost:8080`.
 
 ## Usage
 
-Include any relevant information about how to use the project, including examples or screenshots.
+Sure, here's an example of a "Usage" section for a Spring Boot project:
 
+## Usage
+
+### Prerequisites
+
+Before using this project, ensure that you have the following software installed on your machine:
+
+- Java 11 or later
+- Maven
+
+### Running the Project
+
+To run the project, follow these steps:
+
+1. Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/Adejumok/QuizApplication
+```
+
+2. Change to the project directory:
+
+```bash
+cd project-name
+```
+
+3. Build the project with Maven:
+
+```bash
+mvn clean install
+```
+
+4. Start the application with Maven:
+
+```bash
+mvn spring-boot:run
+```
+
+The application will start and be available at `http://localhost:8080`. You can access the API endpoints using your preferred HTTP client, such as [Postman](https://www.postman.com/) or `curl`.
+
+### API Endpoints
+
+Here are the available API endpoints:
+
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| GET    | /api/items | Returns a list of all items. |
+| GET    | /api/items/{id} | Returns the item with the specified ID. |
+| POST   | /api/items | Creates a new item. |
+| PUT    | /api/items/{id} | Updates the item with the specified ID. |
+| DELETE | /api/items/{id} | Deletes the item with the specified ID. |
+
+### Examples
+
+Here are a few examples of how to use this project:
+
+#### Example 1: Getting all items
+
+To get a list of all items, send a `GET` request to `/api/items`.
+
+#### Example 2: Creating a new item
+
+To create a new item, send a `POST` request to `/api/items` with a JSON payload containing the item data.
+
+```json
+{
+  "name": "New Item",
+  "description": "This is a new item",
+  "price": 9.99
+}
+```
+
+#### Example 3: Updating an item
+
+To update an existing item, send a `PUT` request to `/api/items/{id}` with a JSON payload containing the updated item data.
+
+```json
+{
+  "name": "Updated Item",
+  "description": "This item has been updated",
+  "price": 14.99
+}
+```
+
+### Contact
+
+If you have any questions or issues, please feel free to contact us at `support@project-name.com`.
 ## Endpoints
 
 Here are the endpoints provided by the application:
