@@ -113,13 +113,13 @@ Here are the available API endpoints:
 
 Here are a few examples of how to use this project:
 
-#### Example 1: Getting all items
+#### Example 1: Getting all quizzes
 
-To get a list of all items, send a `GET` request to `/api/items`.
+To get a list of all quizzes, send a `GET` request to `/api/quiz`.
 
-#### Example 2: Creating a new item
+#### Example 2: Adding a new quiz
 
-To create a new item, send a `POST` request to `/api/items` with a JSON payload containing the item data.
+To add a new quiz, send a `POST` request to `/api/quiz` with a JSON payload containing the item data.
 
 ```json
 {
