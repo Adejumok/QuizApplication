@@ -103,11 +103,11 @@ Here are the available API endpoints:
 
 | Method | Endpoint | Description |
 | ------ | -------- | ----------- |
-| GET    | /api/items | Returns a list of all items. |
-| GET    | /api/items/{id} | Returns the item with the specified ID. |
-| POST   | /api/items | Creates a new item. |
-| PUT    | /api/items/{id} | Updates the item with the specified ID. |
-| DELETE | /api/items/{id} | Deletes the item with the specified ID. |
+| GET    | /api/items | Returns a list of all quizzes. |
+| GET    | /api/items/{id} | Returns the quiz with the specified ID. |
+| POST   | /api/items | Adds a new quiz. |
+| PUT    | /api/items/{id} | Updates the quiz with the specified ID. |
+| DELETE | /api/items/{id} | Deletes the quiz with the specified ID. |
 
 ### Examples
 
