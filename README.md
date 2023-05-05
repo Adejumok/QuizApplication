@@ -140,9 +140,14 @@ To update an existing item, send a `PUT` request to `/api/items/{id}` with a JSO
 
 ```json
 {
-  "name": "Updated Item",
-  "description": "This item has been updated",
-  "price": 14.99
+  "name": "Updated Quiz",
+  "questions": {
+                 "text":"The Question",
+                 "answers": {},
+                 "category": "Intermediate",
+                 "correctAnswer": "....."
+                 },
+  "grade": 95
 }
 ```
 
