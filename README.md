@@ -57,9 +57,6 @@ java -jar target/project-name-X.X.X.jar
 
 The application will be running at `http://localhost:8080`.
 
-## Usage
-
-Sure, here's an example of a "Usage" section for a Spring Boot project:
 
 ## Usage
 
