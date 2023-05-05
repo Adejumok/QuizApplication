@@ -103,11 +103,11 @@ Here are the available API endpoints:
 
 | Method | Endpoint | Description |
 | ------ | -------- | ----------- |
-| GET    | /api/items | Returns a list of all quizzes. |
-| GET    | /api/items/{id} | Returns the quiz with the specified ID. |
-| POST   | /api/items | Adds a new quiz. |
-| PUT    | /api/items/{id} | Updates the quiz with the specified ID. |
-| DELETE | /api/items/{id} | Deletes the quiz with the specified ID. |
+| GET    | /api/quiz | Returns a list of all quizzes. |
+| GET    | /api/quiz/{id} | Returns the quiz with the specified ID. |
+| POST   | /api/quiz | Adds a new quiz. |
+| PUT    | /api/quiz/{id} | Updates the quiz with the specified ID. |
+| DELETE | /api/quiz/{id} | Deletes the quiz with the specified ID. |
 
 ### Examples
 
@@ -119,13 +119,18 @@ To get a list of all quizzes, send a `GET` request to `/api/quiz`.
 
 #### Example 2: Adding a new quiz
 
-To add a new quiz, send a `POST` request to `/api/quiz` with a JSON payload containing the item data.
+To add a new quiz, send a `POST` request to `/api/quiz` with a JSON payload containing the quiz data.
 
 ```json
 {
-  "name": "New Item",
-  "description": "This is a new item",
-  "price": 9.99
+  "name": "New Quiz",
+  "questions": {
+                 "text":"The Question",
+                 "answers": {},
+                 "category": "Intermediate",
+                 "correctAnswer": "....."
+                 },
+  "grade": 95
 }
 ```
 
