@@ -174,4 +174,4 @@ This project is licensed under the [MIT License](LICENSE).
 Please feel free to contact me if you have any questions or feedback.
 
 - Email: roseadeyinka01@example.com
-- GitHub: [@username](https://github.com/username)
+- GitHub: (https://github.com/Adejumok)
