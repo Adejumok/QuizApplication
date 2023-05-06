@@ -154,17 +154,6 @@ To update an existing item, send a `PUT` request to `/api/items/{id}` with a JSO
 ### Contact
 
 If you have any questions or issues, please feel free to contact us at `support@project-name.com`.
-## Endpoints
-
-Here are the endpoints provided by the application:
-
-| Method | Endpoint | Description |
-| ------ | -------- | ----------- |
-| GET    | /items   | Returns a list of items. |
-| GET    | /items/{id} | Returns an item with the specified ID. |
-| POST   | /items   | Creates a new item. |
-| PUT    | /items/{id} | Updates an existing item. |
-| DELETE | /items/{id} | Deletes an item with the specified ID. |
 
 ## Contributing
 
