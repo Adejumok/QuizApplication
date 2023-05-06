@@ -173,5 +173,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 Please feel free to contact me if you have any questions or feedback.
 
-- Email: [you@example.com](mailto:you@example.com)
+- Email: roseadeyinka01@example.com
 - GitHub: [@username](https://github.com/username)
