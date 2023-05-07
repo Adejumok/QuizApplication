@@ -151,10 +151,6 @@ To update an existing item, send a `PUT` request to `/api/items/{id}` with a JSO
 }
 ```
 
-### Contact
-
-If you have any questions or issues, please feel free to contact us at `support@project-name.com`.
-
 ## Contributing
 
 If you'd like to contribute to the project, please follow these steps:
