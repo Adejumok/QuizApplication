@@ -80,7 +80,7 @@ git clone https://github.com/Adejumok/QuizApplication
 2. Change to the project directory:
 
 ```bash
-cd project-name
+cd quizApp
 ```
 
 3. Build the project with Maven:
