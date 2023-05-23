@@ -103,7 +103,7 @@ Here are the available API endpoints:
 
 | Method | Endpoint | Description |
 | ------ | -------- | ----------- |
-| GET    | /api/quiz{name} | Returns the quiz with . |
+| GET    | /api/quiz{name} | Returns the quiz with the specified name. |
 | GET    | /api/quiz/{id} | Returns the quiz with the specified ID. |
 | POST   | /api/quiz | Adds a new quiz. |
 | PUT    | /api/quiz/{id} | Updates the quiz with the specified ID. |
