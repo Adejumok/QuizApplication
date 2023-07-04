@@ -1,5 +1,5 @@
 # QuizApplication
-A quiz application using spring boot framework where a user takes a quiz, fills a form containing the user's email address and gets the result of the quiz in his/her mail.
+A quiz application developed using spring boot framework. where a user takes a quiz, fills a form containing the user's email address and gets the result of the quiz in his/her mail.
 
 ## Table of Contents
 
