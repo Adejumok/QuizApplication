@@ -4,7 +4,7 @@ A quiz application developed using the Spring Boot Framework, written in Java pr
 In this application, the user can do the following: 
 - take a quiz
 - fill a form containing the user's email address
-- and gets the result of the quiz in his/her mail.
+And at the end, gets the result of the quiz in his/her mail.
 
 ## Table of Contents
 
