@@ -1,5 +1,7 @@
 # QuizApplication
-A quiz application developed using the Spring Boot Framework, written in Java programming language. In this application, a user takes a quiz, fills a form containing the user's email address and gets the result of the quiz in his/her mail.
+A quiz application developed using the Spring Boot Framework, written in Java programming language. 
+
+In this application, the user can do the following: a user takes a quiz, fills a form containing the user's email address and gets the result of the quiz in his/her mail.
 
 ## Table of Contents
 
